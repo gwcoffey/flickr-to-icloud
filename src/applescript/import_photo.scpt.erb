@@ -1,0 +1,59 @@
+set PARAM_FOLDER_NAME to "Flickr Albums"
+set PARAM_ALBUM_NAMES to {<%= albums %>}
+set PARAM_PATH to "<%= File.expand_path(data["selected_photo"]) %>"
+set PARAM_NAME to "<%= data["name"].gsub('"', '\"') %>"
+set PARAM_KEYWORDS to {<%= keywords %>}
+set PARAM_DESCRIPTION to "<%= data["description"].gsub('"', '\"') %>"
+set PARAM_FAVORITE to <%= data["favorite"] ? 'true' : 'false' %>
+set PARAM_DATE to date "<%= DateTime.strptime(data["date"], "%Y-%m-%d %H:%M:%S").strftime("%A, %B %-d, %Y at %l:%M:%S %p") %>"
+set PARAM_LOCATION to {<%= location %>}
+
+tell application "Photos"
+	-- import the photo
+	set the_photo to first item of (import {POSIX file PARAM_PATH} with skip check duplicates)
+
+	-- set metadata
+	set name of the_photo to PARAM_NAME
+	set keywords of the_photo to PARAM_KEYWORDS
+	set description of the_photo to PARAM_DESCRIPTION
+	set favorite of the_photo to PARAM_FAVORITE
+	set date of the_photo to PARAM_DATE
+	if PARAM_LOCATION is not {} then
+		set location of the_photo to PARAM_LOCATION
+	end if
+
+	-- find folder
+	set the_folder to null
+	repeat with a_folder in folders
+		if name of a_folder is PARAM_FOLDER_NAME then
+			set the_folder to a_folder
+			exit repeat
+		end if
+	end repeat
+
+	if the_folder is null then
+		display dialog "can't find folder " & PARAM_FOLDER_NAME
+		return
+	end if
+
+	-- add to the ALL album as well
+	copy "ALL" to end of PARAM_ALBUM_NAMES
+
+	repeat with album_name in PARAM_ALBUM_NAMES
+		set the_album to null
+		repeat with an_album in albums of the_folder
+			if name of an_album is album_name as string then
+				set the_album to an_album
+				exit repeat
+			end if
+		end repeat
+
+	    if the_album is null then
+		    set the_album to make album named album_name at the_folder
+	    end if
+
+		add {the_photo} to the_album
+	end repeat
+
+end tell
+

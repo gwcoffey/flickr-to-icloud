@@ -1,0 +1,1 @@
+These are ERB templates that produce AppleScript.

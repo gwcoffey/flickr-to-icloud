@@ -1,0 +1,38 @@
+#!/bin/bash
+
+#ruby src/ruby/main.rb "$@"
+
+clean() {
+  rm -f 'out/analysis.json' >/dev/null
+  rm -f 'out/import_data.json' >/dev/null
+  rm -f 'out/imported_shas' >/dev/null
+  echo "done"
+}
+
+verify() {
+  ruby src/ruby/verify.rb "$@"
+}
+
+prepare() {
+  ruby src/ruby/prepare.rb "$@"
+}
+
+import() {
+  ruby src/ruby/import.rb "$@"
+}
+
+if declare -f "${1}" >/dev/null; then
+  func="${1}"
+  shift    # pop $1 and $2 off the argument list
+  "$func" "$@"    # invoke our named function w/ all remaining arguments
+else
+  cat << HELP
+Usage: bin/run COMMAND
+  Commands:
+    clean: remove all derived data and return to pristine state
+    verify: verify the consistency of the Flickr export data
+    prepare: processes the export data and prepares data for review and import
+    import: import the prepared data into Photos.app
+HELP
+  exit 1
+fi

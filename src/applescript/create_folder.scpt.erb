@@ -1,0 +1,16 @@
+set PARAM_FOLDER_NAME to "<%= folder_name %>"
+
+tell application "Photos"
+	set the_folder to null
+	repeat with a_folder in folders
+		if name of a_folder is PARAM_FOLDER_NAME then
+			set the_folder to a_folder
+			exit repeat
+		end if
+	end repeat
+
+	if the_folder is null then
+		make folder named PARAM_FOLDER_NAME
+	end if
+end tell
+return -- don't return the folder (which ends up in the osascript log)
