@@ -1,3 +1,5 @@
+# Flicker to iCloud
+
 With the Shared Library feature in macOs Ventura, my wife decided it was time to abandon Flickr after many years. 
 
 This project documents the process I used and the scripts I wrote to import her photos into the macOS Photos app. The goal was to preserve the metadata that was important to her.
