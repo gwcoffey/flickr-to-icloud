@@ -54,14 +54,14 @@ import_data = File.open(File.join("out", "import_data.json"), "r") {|f| JSON.par
 skip_count = 0
 stop_idx = options[:max_count]
 import_data.each_with_index do |datum, idx|
-    if idx >= stop_idx
+    if ! options[:all] && idx >= stop_idx
         puts "stopping after #{options[:max_count]} files (use -a to import all photos)"
         break
     end
 
     if imported_shas.key?(datum["sha"])
         skip_count += 1
-        stop_idx += 1
+        stop_idx += 1 unless options[:all]
         next
     end
 
