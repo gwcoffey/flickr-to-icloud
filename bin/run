@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#ruby src/ruby/main.rb "$@"
-
 clean() {
   rm -f 'out/analysis.json' >/dev/null
   rm -f 'out/import_data.json' >/dev/null
