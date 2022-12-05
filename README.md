@@ -127,7 +127,7 @@ This command runs in two modes:
 
 It is highly likely some problem will cause the import to abort. If this happens you can fix the problem and start again. The script will pick up where you left off. (If you want to start from the beginning, pass the `-r` switch to the `import` command.)
 
-> Note: It may very well be faster/more efficient to import a batch of photos instead of doing one at a time. But it was cumbersome to reliably *find* the correct photos after import. And I need to find them again to add them to multiple albums and set the metadata. So for simplicity I do them one at a time. In my case the script could import about 1,000 photos per hour.
+> Note: It may very well be faster/more efficient to import a batch of photos instead of doing one at a time. But it was cumbersome to reliably *find* the correct photos after import. And I need to find them again to add them to multiple albums and set the metadata. So for simplicity I do them one at a time. In my case the script could import about 3,500 photos per hour on an older intel MacBook Pro.
 
 ### Command `clean` ([Source](https://github.com/gwcoffey/flickr-to-icloud/blob/main/bin/run#L5))
 
